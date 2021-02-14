@@ -26,17 +26,17 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         /// <summary>
         /// Radius of drawn hand circles
         /// </summary>
-        private const double HandSize = 30;
+        private const double HandSize = 75;
 
         /// <summary>
         /// Thickness of drawn joint lines
         /// </summary>
-        private const double JointThickness = 3;
+        private const double JointThickness = 8;
 
         /// <summary>
         /// Thickness of clip edge rectangles
         /// </summary>
-        private const double ClipBoundsThickness = 10;
+        private const double ClipBoundsThickness = 30;
 
         /// <summary>
         /// Constant for clamping Z values of camera space points from being negative
@@ -71,7 +71,7 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         /// <summary>
         /// Pen used for drawing bones that are currently inferred
         /// </summary>        
-        private readonly Pen inferredBonePen = new Pen(Brushes.Gray, 1);
+        private readonly Pen inferredBonePen = new Pen(Brushes.Gray, 3);
 
         /// <summary>
         /// Drawing group for body rendering output
@@ -150,7 +150,7 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 
             // get the depth (display) extents
-            FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
+            FrameDescription frameDescription = this.kinectSensor.ColorFrameSource.FrameDescription;
 
             // get size of joint space
             this.displayWidth = frameDescription.Width;
@@ -199,12 +199,12 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
             // populate body colors, one for each BodyIndex
             this.bodyColors = new List<Pen>();
 
-            this.bodyColors.Add(new Pen(Brushes.Red, 6));
-            this.bodyColors.Add(new Pen(Brushes.Orange, 6));
-            this.bodyColors.Add(new Pen(Brushes.Green, 6));
-            this.bodyColors.Add(new Pen(Brushes.Blue, 6));
-            this.bodyColors.Add(new Pen(Brushes.Indigo, 6));
-            this.bodyColors.Add(new Pen(Brushes.Violet, 6));
+            this.bodyColors.Add(new Pen(Brushes.Red, 15));
+            this.bodyColors.Add(new Pen(Brushes.Orange, 15));
+            this.bodyColors.Add(new Pen(Brushes.Green, 15));
+            this.bodyColors.Add(new Pen(Brushes.Blue, 15));
+            this.bodyColors.Add(new Pen(Brushes.Indigo, 15));
+            this.bodyColors.Add(new Pen(Brushes.Violet, 15));
 
             // open the reader for the color frames
             this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
@@ -485,7 +485,7 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
                     names.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 
                     // Draw a transparent background to set the render size
-                    dc.DrawImage(this.colorBitmap, new Rect(-121.0, 0.0, this.displayWidth + 242, this.displayHeight)); // 121, 242 は暫定値
+                    dc.DrawImage(this.colorBitmap, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
@@ -513,7 +513,7 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
                                     position.Z = InferredZPositionClamp;
                                 }
 
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                ColorSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToColorSpace(position);
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                                 names.Add(depthSpacePoint.X + "," + depthSpacePoint.Y);
                             }
