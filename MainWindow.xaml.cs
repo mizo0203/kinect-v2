@@ -516,9 +516,10 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
 
                     if (names.Count > 1)
                     {
-                        StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8);
-                        writer.Write(string.Join(",", names) + "\n");
-                        writer.Close();
+                        using (StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8))
+                        {
+                            writer.Write(string.Join(",", names) + "\n");
+                        }
                     }
                 }
             }
