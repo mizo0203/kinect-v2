@@ -124,6 +124,11 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         private List<Pen> bodyColors;
 
         /// <summary>
+        /// Current time text to display
+        /// </summary>
+        private string timeText = "";
+
+        /// <summary>
         /// Current status text to display
         /// </summary>
         private string statusText = null;
@@ -460,7 +465,10 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
                     var names = new List<string>();
-                    names.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    this.timeText = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    this.StatusText = (this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
+                                                                     : Properties.Resources.SensorNotAvailableStatusText) + " " + this.timeText;
+                    names.Add(this.timeText);
 
                     // Draw a transparent background to set the render size
                     dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
@@ -659,8 +667,8 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
         {
             // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
-                                                            : Properties.Resources.SensorNotAvailableStatusText;
+            this.StatusText = (this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
+                                                             : Properties.Resources.SensorNotAvailableStatusText) + " " + this.timeText;
         }
     }
 }
