@@ -132,6 +132,9 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         /// Bitmap to display
         /// </summary>
         private WriteableBitmap colorBitmap = null;
+        /// Current time text to display
+        /// </summary>
+        private string timeText = "";
 
         /// <summary>
         /// Current status text to display
@@ -344,145 +347,21 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
 
             if (dataReceived)
             {
-
                 if (!File.Exists("Data.csv"))
                 {
-                    var names = new List<string>();
-                    names.Add("Time");
-                    names.Add("SpineBase (3D) X");
-                    names.Add("SpineBase (3D) Y");
-                    names.Add("SpineBase (3D) Z");
-                    names.Add("SpineBase (2D) X");
-                    names.Add("SpineBase (2D) Y");
-                    names.Add("SpineMid (3D) X");
-                    names.Add("SpineMid (3D) Y");
-                    names.Add("SpineMid (3D) Z");
-                    names.Add("SpineMid (2D) X");
-                    names.Add("SpineMid (2D) Y");
-                    names.Add("Neck (3D) X");
-                    names.Add("Neck (3D) Y");
-                    names.Add("Neck (3D) Z");
-                    names.Add("Neck (2D) X");
-                    names.Add("Neck (2D) Y");
-                    names.Add("Head (3D) X");
-                    names.Add("Head (3D) Y");
-                    names.Add("Head (3D) Z");
-                    names.Add("Head (2D) X");
-                    names.Add("Head (2D) Y");
-                    names.Add("ShoulderLeft (3D) X");
-                    names.Add("ShoulderLeft (3D) Y");
-                    names.Add("ShoulderLeft (3D) Z");
-                    names.Add("ShoulderLeft (2D) X");
-                    names.Add("ShoulderLeft (2D) Y");
-                    names.Add("ElbowLeft (3D) X");
-                    names.Add("ElbowLeft (3D) Y");
-                    names.Add("ElbowLeft (3D) Z");
-                    names.Add("ElbowLeft (2D) X");
-                    names.Add("ElbowLeft (2D) Y");
-                    names.Add("WristLeft (3D) X");
-                    names.Add("WristLeft (3D) Y");
-                    names.Add("WristLeft (3D) Z");
-                    names.Add("WristLeft (2D) X");
-                    names.Add("WristLeft (2D) Y");
-                    names.Add("HandLeft (3D) X");
-                    names.Add("HandLeft (3D) Y");
-                    names.Add("HandLeft (3D) Z");
-                    names.Add("HandLeft (2D) X");
-                    names.Add("HandLeft (2D) Y");
-                    names.Add("ShoulderRight (3D) X");
-                    names.Add("ShoulderRight (3D) Y");
-                    names.Add("ShoulderRight (3D) Z");
-                    names.Add("ShoulderRight (2D) X");
-                    names.Add("ShoulderRight (2D) Y");
-                    names.Add("ElbowRight (3D) X");
-                    names.Add("ElbowRight (3D) Y");
-                    names.Add("ElbowRight (3D) Z");
-                    names.Add("ElbowRight (2D) X");
-                    names.Add("ElbowRight (2D) Y");
-                    names.Add("WristRight (3D) X");
-                    names.Add("WristRight (3D) Y");
-                    names.Add("WristRight (3D) Z");
-                    names.Add("WristRight (2D) X");
-                    names.Add("WristRight (2D) Y");
-                    names.Add("HandRight (3D) X");
-                    names.Add("HandRight (3D) Y");
-                    names.Add("HandRight (3D) Z");
-                    names.Add("HandRight (2D) X");
-                    names.Add("HandRight (2D) Y");
-                    names.Add("HipLeft (3D) X");
-                    names.Add("HipLeft (3D) Y");
-                    names.Add("HipLeft (3D) Z");
-                    names.Add("HipLeft (2D) X");
-                    names.Add("HipLeft (2D) Y");
-                    names.Add("KneeLeft (3D) X");
-                    names.Add("KneeLeft (3D) Y");
-                    names.Add("KneeLeft (3D) Z");
-                    names.Add("KneeLeft (2D) X");
-                    names.Add("KneeLeft (2D) Y");
-                    names.Add("AnkleLeft (3D) X");
-                    names.Add("AnkleLeft (3D) Y");
-                    names.Add("AnkleLeft (3D) Z");
-                    names.Add("AnkleLeft (2D) X");
-                    names.Add("AnkleLeft (2D) Y");
-                    names.Add("FootLeft (3D) X");
-                    names.Add("FootLeft (3D) Y");
-                    names.Add("FootLeft (3D) Z");
-                    names.Add("FootLeft (2D) X");
-                    names.Add("FootLeft (2D) Y");
-                    names.Add("HipRight (3D) X");
-                    names.Add("HipRight (3D) Y");
-                    names.Add("HipRight (3D) Z");
-                    names.Add("HipRight (2D) X");
-                    names.Add("HipRight (2D) Y");
-                    names.Add("KneeRight (3D) X");
-                    names.Add("KneeRight (3D) Y");
-                    names.Add("KneeRight (3D) Z");
-                    names.Add("KneeRight (2D) X");
-                    names.Add("KneeRight (2D) Y");
-                    names.Add("AnkleRight (3D) X");
-                    names.Add("AnkleRight (3D) Y");
-                    names.Add("AnkleRight (3D) Z");
-                    names.Add("AnkleRight (2D) X");
-                    names.Add("AnkleRight (2D) Y");
-                    names.Add("FootRight (3D) X");
-                    names.Add("FootRight (3D) Y");
-                    names.Add("FootRight (3D) Z");
-                    names.Add("FootRight (2D) X");
-                    names.Add("FootRight (2D) Y");
-                    names.Add("SpineShoulder (3D) X");
-                    names.Add("SpineShoulder (3D) Y");
-                    names.Add("SpineShoulder (3D) Z");
-                    names.Add("SpineShoulder (2D) X");
-                    names.Add("SpineShoulder (2D) Y");
-                    names.Add("HandTipLeft (3D) X");
-                    names.Add("HandTipLeft (3D) Y");
-                    names.Add("HandTipLeft (3D) Z");
-                    names.Add("HandTipLeft (2D) X");
-                    names.Add("HandTipLeft (2D) Y");
-                    names.Add("ThumbLeft (3D) X");
-                    names.Add("ThumbLeft (3D) Y");
-                    names.Add("ThumbLeft (3D) Z");
-                    names.Add("ThumbLeft (2D) X");
-                    names.Add("ThumbLeft (2D) Y");
-                    names.Add("HandTipRight (3D) X");
-                    names.Add("HandTipRight (3D) Y");
-                    names.Add("HandTipRight (3D) Z");
-                    names.Add("HandTipRight (2D) X");
-                    names.Add("HandTipRight (2D) Y");
-                    names.Add("ThumbRight (3D) X");
-                    names.Add("ThumbRight (3D) Y");
-                    names.Add("ThumbRight (3D) Z");
-                    names.Add("ThumbRight (2D) X");
-                    names.Add("ThumbRight (2D) Y");
-                    StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8);
-                    writer.Write(string.Join(",", names) + "\n");
-                    writer.Close();
+                    using (StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8))
+                    {
+                        writer.Write(string.Join(",", CsvData.Fields()) + "\n");
+                    }
                 }
 
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
                     var names = new List<string>();
-                    names.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    this.timeText = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    this.StatusText = (this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
+                                                                     : Properties.Resources.SensorNotAvailableStatusText) + " " + this.timeText;
+                    names.Add(this.timeText);
 
                     // Draw a transparent background to set the render size
                     dc.DrawImage(this.colorBitmap, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
@@ -530,9 +409,10 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
 
                     if (names.Count > 1)
                     {
-                        StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8);
-                        writer.Write(string.Join(",", names) + "\n");
-                        writer.Close();
+                        using (StreamWriter writer = new StreamWriter("Data.csv", true, Encoding.UTF8))
+                        {
+                            writer.Write(string.Join(",", names) + "\n");
+                        }
                     }
                 }
             }
@@ -716,8 +596,8 @@ namespace Microsoft.Samples.Kinect.BodyAnalysis
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
         {
             // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
-                                                            : Properties.Resources.SensorNotAvailableStatusText;
+            this.StatusText = (this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
+                                                             : Properties.Resources.SensorNotAvailableStatusText) + " " + this.timeText;
         }
     }
 }
